@@ -82,7 +82,7 @@ app.get("/:customeListName", function (req, res) {
                 res.redirect("/" + customeListName);
             } else {
                 //show list if list is exist's
-                res.render("list", { listOfTitle: foundList.name, newListItems: foundList.items});
+                res.render("list", { listOfTitle: foundList.name, newListItems: foundList.items });
 
             }
         }
@@ -100,11 +100,11 @@ app.post("/", function (req, res) {
         name: itemName
     });
 
-    if(listName === "Today") {
+    if (listName === "Today") {
         item.save();
         res.redirect("/");
-    }else {
-        List.findOne({name: listName}, function(err, foundList) {
+    } else {
+        List.findOne({ name: listName }, function (err, foundList) {
             foundList.items.push(item);
             foundList.save();
             res.redirect("/" + listName);
@@ -116,20 +116,20 @@ app.post("/", function (req, res) {
 app.post("/delete", function (req, res) {
     const checkItemId = req.body.checkbox;
     const listName = req.body.listName;
-//default page
-    if(listName === "Today") {
-        Item.findByIdAndRemove(checkItemId, function(err) {
+    //default page
+    if (listName === "Today") {
+        Item.findByIdAndRemove(checkItemId, function (err) {
             if (!err) {
                 console.log("Succesfully deleted checked it.");
                 res.redirect("/");
             }
         });
         //custome page
-    }else {
-        List.findOneAndUpdate({name: listName}, {$pull: {items: {_id: checkItemId}}}, function(err, foundList) {
-          if(!err) {
-              res.redirect("/" + listName);
-          }
+    } else {
+        List.findOneAndUpdate({ name: listName }, { $pull: { items: { _id: checkItemId } } }, function (err, foundList) {
+            if (!err) {
+                res.redirect("/" + listName);
+            }
         });
     }
 });
@@ -158,9 +158,12 @@ app.get("/about", function (req, res) {
 
 
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
 
 
-
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log("Server is working........");
 })
