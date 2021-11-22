@@ -11,7 +11,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-//create connection to MongoDB atlas(aws cloud) 
+//create connection to MongoDB atlas database and deploy into a (aws database cloud) 
 mongoose.connect("mongodb+srv://admin-aklilu:admin-aklilu@cluster0.jsats.mongodb.net/todolistDB?retryWrites=true&w=majority", { useNewUrlParser: true });
 
 //create schema 
@@ -25,15 +25,14 @@ const item1 = new Item({
     name: "Welcome to your todolist"
 });
 const item2 = new Item({
-    name: "Hit this + button"
+    name: "Fill the blank and add by pressing + button"
 });
 const item3 = new Item({
-    name: "Hit this <-- button"
+    name: "delete an item by clicking the check box."
 });
 
 const defaultItem = [item1, item2, item3];
 
-//---------------------------custome route
 const listSchema = {
     name: String,
     items: [itemSchema]
@@ -142,16 +141,6 @@ app.get("/work", function (req, res) {
 app.get("/about", function (req, res) {
     res.render("about");
 });
-
-
-
-
-
-
-
-
-
-
 
 
 
